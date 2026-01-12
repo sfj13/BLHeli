@@ -140,7 +140,7 @@ E_X_		EQU 34	; X  X  RC CC MA MB MC X     X  X  Ac Bc Cc Ap Bp Cp    PWM fets ac
 
 ;**** **** **** **** ****
 ; Select the port mapping to use (or unselect all for use with external batch compile file)
-;ESCNO EQU A_
+ESCNO EQU A_
 ;ESCNO EQU B_
 ;ESCNO EQU C_
 ;ESCNO EQU D_
@@ -174,12 +174,15 @@ E_X_		EQU 34	; X  X  RC CC MA MB MC X     X  X  Ac Bc Cc Ap Bp Cp    PWM fets ac
 
 ;**** **** **** **** ****
 ; Select the MCU type (or unselect for use with external batch compile file)
-;MCU_48MHZ EQU	2
+MCU_48MHZ EQU	2
 
 ;**** **** **** **** ****
 ; Select the fet deadtime (or unselect for use with external batch compile file)
-;FETON_DELAY EQU 50	; 20.4ns per step
+FETON_DELAY EQU 70	; 20.4ns per step
 
+;**** **** **** **** ****
+; Select whether brushed PWM input is desired
+BRUSHED_INPUT EQU 1; 
 
 ;**** **** **** **** ****
 ; ESC selection statements
@@ -1123,6 +1126,22 @@ int0_int_fall_not_oneshot_42:
 
 int0_int_fall_not_oneshot_125:
 	; Regular signal - multiply by 43/1024
+	; First scale brushed signal if desired
+IF BRUSHED_INPUT == 1
+	; Minimum PWM time is 72us, max is 942us, 870us span
+	; 72us is 3456 pulses, 942us is 45216 pulses at 48MHz
+	; Shift timing up 1000us to fall into the 1000-2000us range
+	clr	C
+	mov A, Temp1
+	add A, #80h; Add 128 for low byte 1000us shift
+	mov	Temp1, A
+	mov A, Temp 2
+	addc A, #BBh; High byte 1000us shift
+	mov Temp2, A
+	mov A, Temp3
+	addc A, #00h; Add overflow bit
+	mov Temp3, A
+ENDIF
 IF MCU_48MHZ >= 1
 	clr	C
 	mov	A, Temp3		; Divide by 2
