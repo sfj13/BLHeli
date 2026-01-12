@@ -1135,7 +1135,7 @@ IF BRUSHED_INPUT == 1
 	mov A, Temp1
 	add A, #80h; Add 128 for low byte 1000us shift
 	mov	Temp1, A
-	mov A, Temp 2
+	mov A, Temp2
 	addc A, #0BBh; High byte 1000us shift
 	mov Temp2, A
 	mov A, Temp3
