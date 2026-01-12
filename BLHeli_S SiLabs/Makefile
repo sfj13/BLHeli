@@ -15,26 +15,29 @@ FETON_DELAY ?= 5
 # SimplicityStudio. these wine settings are quite important. if you get
 #  ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
 # you messed up your simplicity studio install/path settins below:
-SIMPLICITY_PATH ?= ~/local/SimplicityStudio_v4/
+SIMPLICITY_PATH ?= C:\SiliconLabs\SimplicityStudio
 WINE_PREFIX     ?= ~/.config/SimplicityStudio/v4/studio-wine
 WINE_BIN        ?= $(SIMPLICITY_PATH)/support/common/wine/usr/bin/wine
 WINE            = export WINEPREFIX=`realpath $(WINE_PREFIX)`; $(WINE_BIN)
 
 # path to the keil binaries
-KEIL_PATH       = $(SIMPLICITY_PATH)/developer/toolchains/keil_8051/9.53/BIN
+KEIL_PATH       = C:\SiliconLabs\SimplicityStudio\v5\developer\toolchains\keil_8051\9.60\BIN
 
 # some directory config
-OUTPUT_DIR     ?= build
+OUTPUT_DIR     ?= .\build
 OUTPUT_DIR_HEX ?= $(OUTPUT_DIR)/hex
 LOG_DIR        ?= $(OUTPUT_DIR)/log
 
 # define the assembler/linker scripts
-AX51_BIN = $(KEIL_PATH)/AX51.exe
-LX51_BIN = $(KEIL_PATH)/LX51.exe
-OX51_BIN = $(KEIL_PATH)/Ohx51.exe
-AX51 = $(WINE) $(AX51_BIN)
-LX51 = $(WINE) $(LX51_BIN)
-OX51 = $(WINE) $(OX51_BIN)
+AX51_BIN = $(KEIL_PATH)\AX51.exe
+LX51_BIN = $(KEIL_PATH)\LX51.exe
+OX51_BIN = $(KEIL_PATH)\Ohx51.exe
+AX51 = $(AX51_BIN)
+LX51 = $(LX51_BIN)
+OX51 = $(OX51_BIN)
+# AX51 = $(WINE) $(AX51_BIN)
+# LX51 = $(WINE) $(LX51_BIN)
+# OX51 = $(WINE) $(OX51_BIN)
 
 # set up flags
 AX51_FLAGS = DEBUG MACRO NOMOD51 COND SYMBOLS PAGEWIDTH(120) PAGELENGTH(65)
@@ -45,7 +48,9 @@ ASM_SRC = BLHeli_S.asm
 ASM_INC = $(TARGETS:=.inc) BLHeliBootLoad.inc BLHeliPgm.inc SI_EFM8BB1_Defs.inc SI_EFM8BB2_Defs.inc
 
 # check that wine/simplicity studio is available
-EXECUTABLES = $(WINE_BIN) $(AX51_BIN) $(LX51_BIN) $(OX51_BIN) 
+#EXECUTABLES = $(WINE_BIN) $(AX51_BIN) $(LX51_BIN) $(OX51_BIN) 
+EXECUTABLES = $(AX51_BIN) $(LX51_BIN) $(OX51_BIN) 
+
 DUMMYVAR := $(foreach exec, $(EXECUTABLES), \
 		$(if $(wildcard $(exec)),found, \
 		$(error "Could not find $(exec). Make sure to set the correct paths to the simplicity install location")))
@@ -81,7 +86,7 @@ EFM8_LOAD_BIN  ?= efm8load.py
 EFM8_LOAD_PORT ?= /dev/ttyUSB0
 EFM8_LOAD_BAUD ?= 57600
 
-SINGLE_TARGET_HEX = $(OUTPUT_DIR)/$(VARIANT)_$(MCU)_$(FETON_DELAY)_$(REVISION).HEX
+SINGLE_TARGET_HEX = $(OUTPUT_DIR)\$(VARIANT)_$(MCU)_$(FETON_DELAY)_$(REVISION).HEX
 
 single_target : $(SINGLE_TARGET_HEX)
 

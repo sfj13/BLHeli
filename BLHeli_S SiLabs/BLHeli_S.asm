@@ -37,9 +37,9 @@ $NOMOD51
 ; The code autodetects normal, OneShot125, Oneshot42, Multishot or Dshot.
 ;
 ; The first lines of the software must be modified according to the chosen environment:
-; ESCNO EQU "ESC"
-; MCU_48MHZ EQU "N"
-; FETON_DELAY EQU "N"
+;ESCNO EQU "ESC"
+;MCU_48MHZ EQU "N"
+;FETON_DELAY EQU "N"
 ; 
 ;**** **** **** **** ****
 ; Revision history:
