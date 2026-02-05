@@ -23,7 +23,7 @@
 ;**** **** **** **** ****
 ;
 ; Hardware definition file "AA"
-; X  X  RC X  MC MB MA CC    X  X  Ac Ap Bc Bp Cp Ac
+; X  X  RC X  MC MB MA CC    X  X  Ac Ap Bc Bp Cp Cc
 ;
 ; PWM Fets on low side, active HIGH
 ; COM fets on high side, active LOW

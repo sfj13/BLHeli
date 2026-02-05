@@ -137,6 +137,7 @@ B_X_		EQU 31	; X  X  RC CC MA MC MB X     X  X  Cp Cc Bp Bc Ap Ac    PWM fets ac
 C_X_		EQU 32	; X  X  RC CC MA MC MB X     X  X  Cp Cc Bp Bc Ap Ac    PWM fets active low, on high side.  COM fets active high
 D_X_		EQU 33	; X  X  RC CC MA MC MB X     X  X  Cc Cp Bc Bp Ac Ap    PWM fets active high, on high side. COM fets active high
 E_X_		EQU 34	; X  X  RC CC MA MB MC X     X  X  Ac Bc Cc Ap Bp Cp    PWM fets active high, on high side. COM fets active high
+A_A_		EQU 35	; X  X  RC X  MC MB MA CC    X  X  Ac Ap Bc Bp Cp Cc	PWM fets active high, on low side. COM fets active low
 
 ;**** **** **** **** ****
 ; Select the port mapping to use (or unselect all for use with external batch compile file)
@@ -171,6 +172,7 @@ E_X_		EQU 34	; X  X  RC CC MA MB MC X     X  X  Ac Bc Cc Ap Bp Cp    PWM fets ac
 ;ESCNO EQU C_X_  ; Requires MCU_48MHZ=2
 ;ESCNO EQU D_X_  ; Requires MCU_48MHZ=2
 ;ESCNO EQU E_X_  ; Requires MCU_48MHZ=2
+;ESCNO EQU A_A_
 
 ;**** **** **** **** ****
 ; Select the MCU type (or unselect for use with external batch compile file)
@@ -305,6 +307,10 @@ ENDIF
 
 IF ESCNO == E_X_
 $include (E_X.inc)      ; Select pinout E_X
+ENDIF
+
+IF ESCNO == A_A_
+$include (AA.inc)		; Select pinout A_A_
 ENDIF
 
 
